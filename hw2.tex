@@ -1,0 +1,206 @@
+\documentclass[a4paper]{article}
+\usepackage{listings}
+\usepackage{animate}
+\usepackage{hyperref}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+%\definecolor{light-gray}{gray}{0.75}
+\usepackage[onlyps]{altfont}
+\usepackage{CJK}
+\usepackage{graphicx}
+\usepackage[top=1in,bottom=1in,left=1.25in,right=1.25in]{geometry}
+\begin{CJK}{UTF8}{gbsn}
+	\author{杨梓鑫\ \ 10级物理弘毅班}
+	\title{第二次计算物理作业}
+	\date{学号：2010301020023}
+	\begin{document}
+	\maketitle
+	蔡老师请一定下载下来用Adobe Reader看，因为有！惊！喜！喔！\\\\
+\noindent \sf	$*\mathbf{2.12.}$ Add the effect of the Earth's revolution about its own axis, that is, consider the \emph{Coriolis force}.\\\\
+$\cal SOLUTION: $\\\\
+\normalsize
+\sf The situation we are dealing with now is a 3-dimensional system. Thus we must be very careful when setting our coordinates.\\
+	\begin{figure}[htbp]
+	\includegraphics[scale=0.6, trim=1cm 7.5cm 1cm 4.5cm]{123.pdf}
+	\end{figure}
+
+	The canon is subject to three parts of force: gravity $\vec{G}=mg\vec{k}$, the drag force $\vec{F}_{drag}=-B_2v^2\frac{\vec{v}}{|v|}$, the Coriolis force $\vec{F}_{co}=-2m\vec{\omega}\times\vec{v}$. $\left(|v|=\sqrt{v_x^2+v_y^2+v_z^2}\right)$, so the total force is $$\vec{F}_{tot}=\vec{G}+\vec{F}_{drag}+\vec{F}_{co}.$$\\
+In the Coriolis force term, $\vec{\omega}=-\omega\cos\varphi\vec{i}+\omega\sin\varphi\vec{k}$, where $\varphi$ is the latitude of the location of the canon. And since $\vec{v}=v_x\vec{i}+v_y\vec{j}+v_z\vec{k},$ 
+\begin{eqnarray*}
+	\vec{F}_{co}&=&-2m\vec{\omega}\times\vec{v}\\
+	&=&2m\omega v_y\sin\varphi\vec{i}-2m\omega\left(v_z\cos\varphi+v_x\sin\varphi\right)\vec{j}+2m\omega v_y\cos\varphi\vec{k}
+\end{eqnarray*}
+And the equations of motion in each direction are:
+\newcommand{\ud}{\mathrm{d}}
+\begin{eqnarray}
+	a_x=\frac{\ud v_x}{\ud t}&=&2\omega v_y\sin\varphi-B_2vv_x\\
+	a_y=\frac{\ud v_y}{\ud t}&=&-2\omega\left(v_z\cos\varphi+v_x\sin\varphi\right)-B_2vv_y\\
+	a_z=\frac{\ud v_z}{\ud t}&=&-g+2\omega v_y\cos\varphi-B_2vv_z
+\end{eqnarray}
+with the initial condition: when $t=0$, $x=y=z=0$. And $$v_x=v_{x_0},v_y=v_{y_0},v_z=v_{z_0}.$$
+Frankly,  it is quite hard to solve these DEs analytically, even with the help of some software like \emph{Maple}. Therefore, we are only going to give a numerical simulation of the trajectory of a canon shell under the effect of drag force and Coriolis force.\\\\
+Using the Euler method, we write the evolution equations like:
+\begin{eqnarray*}
+	x_i(t+\ud t)&=&x_i(t)+v_i(t)\ud t+\frac{1}{2}a_i(t)\left(\ud t\right)^2+\cdots\\
+	&\approx& x_i(t)+v_i(t)\Delta t+\frac{1}{2}a_i(t)\left(\Delta t\right)^2\\
+	v_i(t+\ud t)&\approx&v_i(t)+a_i(t)\Delta t
+\end{eqnarray*}
+where $x_i=x,y,z,\ \ v_i=v_x, v_y, v_z,\ \ a_i=a_x, a_y,a_z$.\\\\
+
+\noindent The result is delightful!\\
+To analyze the process, we are going to investigate two probably main related factors, latitude and initial velocity. \\
+First: the latitude $\varphi$, the seemingly easier one. Because latitude affectd both the gravitational acceleration $g$, and the rotational angular speed of the earth $\vec{\omega}=-\omega\cos\varphi\vec{i}+\omega\sin\varphi\vec{k}$.\\
+With $B_2/m=4\times10^{-5}$m$^{-1}$, initial velocity $\vec{v}=500\vec{i}+500\vec{j}+500\vec{k}$ m$\cdot$s$^{-1}$, we now set $\varphi$ from $0^\circ$ to $90^\circ$, and the cooresponding $g$ on the sea level.\\
+The separate results are:\\
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=0/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=0/frame}{00}{36}
+\caption{$\varphi=0^\circ,g=9.78030$ m$\cdot$s$^{-2}$ and Landing Location $(19169.7,19143.1)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=10/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=10/frame}{00}{36}
+\caption{$\varphi=10^\circ,g=9.78186$ m$\cdot$s$^{-2}$ and Landing Location $(19182.2,19126.9)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=20/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=20/frame}{00}{36}
+\caption{$\varphi=20^\circ,g=9.78634$ m$\cdot$s$^{-2}$ and Landing Location $(19190.2,19108.1)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=30/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=30/frame}{00}{36}
+\caption{$\varphi=30^\circ,g=9.79321$ m$\cdot$s$^{-2}$ and Landing Location $(19194,19087.5)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=40/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=40/frame}{00}{36}
+\caption{$\varphi=40^\circ,g=9.80166$ m$\cdot$s$^{-2}$ and Landing Location $(19194,19066.4)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=50/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=50/frame}{00}{36}
+\caption{$\varphi=50^\circ,g=9.81066$ m$\cdot$s$^{-2}$ and Landing Location $(19190.8,19046.1)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=60/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=60/frame}{00}{36}
+\caption{$\varphi=60^\circ,g=9.81914$ m$\cdot$s$^{-2}$ and Landing Location $(19185.2,19028)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=70/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=70/frame}{00}{36}
+\caption{$\varphi=70^\circ,g=9.82606$ m$\cdot$s$^{-2}$ and Landing Location $(19178.3,19013.2)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=80/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=80/frame}{00}{36}
+\caption{$\varphi=80^\circ,g=9.83058$ m$\cdot$s$^{-2}$ and Landing Location $(19170.7,19002.7)$m}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.25]{/home/alexandra/CP_Hw/Chap2/phi=90/c1.pdf}
+\animategraphics[autoplay,loop, width=5cm]{8}{/home/alexandra/CP_Hw/Chap2/phi=90/frame}{00}{36}
+\caption{$\varphi=90^\circ,g=9.83218$ m$\cdot$s$^{-2}$ and Landing Location $(19162.9,18997.2)$m}
+\end{figure}
+\newpage
+Seemingly not much difference, right? Indeed it doesn't. Putting all ten curves altogether for a clearer comparison, they do locate extremely close to each other.\\
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/birdeyeview.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/rightsideview.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/sideview.pdf}
+\caption{Bird eye's view, right side view and left side view}
+\end{figure}
+\begin{figure}[htbp]\sf
+But if we zoom up part of the coordinate frame and take a close look, there exists some kind of variation.
+
+\includegraphics[scale=0.35]{/home/alexandra/CP_Hw/Chap2/top.pdf}
+\includegraphics[scale=0.35]{/home/alexandra/CP_Hw/Chap2/landing.pdf}
+\rm\caption{The top part and landing part}
+\end{figure}
+\newpage
+\sf Next, we are going to see how the initial velocity will affect the trajectory of the canon shell. To simplify, we fix $g=9.8$ m$\cdot$s$^{-2}$ and latitude at $\varphi=30^\circ$ which is about where we are.\\
+With three variables, it is hard to decide how to change them and compare. Thus, let's start with the same ratio but different scale, $v_x(0)=v_y(0)=v_z(0)$.\\
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/10_10_10.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/50_50_50.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/100_100_100.pdf}
+\caption{The initial velocities in each direction are all $10$ m$\cdot$s$^{-1}$, $50$ m$\cdot$s$^{-1}$ ,$100$ m$\cdot$s$^{-1}$}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/200_200_200.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/500_500_500.pdf}
+\includegraphics[scale=0.24]{/home/alexandra/CP_Hw/Chap2/1:1:1/1000_1000_1000.pdf}
+\caption{The initial velocities in each direction are all $200$ m$\cdot$s$^{-1}$, $500$ m$\cdot$s$^{-1}$ ,$1000$ m$\cdot$s$^{-1}$}
+\end{figure}
+
+Put them together in a frame, we find out that though the scales distinct, the whole shapes are similar to each other. 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.35]{/home/alexandra/CP_Hw/Chap2/1:1:1/10+50+100.pdf}
+\includegraphics[scale=0.35]{/home/alexandra/CP_Hw/Chap2/1:1:1/200+500+1000.pdf}
+\animategraphics[autoplay,loop, width=6cm]{8}{/home/alexandra/CP_Hw/Chap2/1:1:1/frame}{00}{36}
+\end{figure}
+\newpage
+\noindent So now, different ratio but similar scale.\\
+But the problem is we have three directions and they are not identical in the equations of motion. Therefore, with each kind of ratio, we want to put all possible combination in one picture so that in the meantime we can also observe the same amount of $|\vec{v}(0)|$ with different direction.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.3]{/home/alexandra/CP_Hw/Chap2/1:2:1/112.pdf}
+\animategraphics[autoplay,loop, width=7cm]{8}{/home/alexandra/CP_Hw/Chap2/1:2:1/frame}{00}{36}
+\caption{velocity ratio is $1:1:2$}
+\centering
+\includegraphics[scale=0.3]{/home/alexandra/CP_Hw/Chap2/1:2:2/122.pdf}
+\animategraphics[autoplay,loop, width=7cm]{8}{/home/alexandra/CP_Hw/Chap2/1:2:2/frame}{00}{36}
+\caption{velocity ratio is $1:2:2$}
+\centering
+\includegraphics[scale=0.3]{/home/alexandra/CP_Hw/Chap2/1:2:3/123.pdf}
+\animategraphics[autoplay,loop, width=7cm]{8}{/home/alexandra/CP_Hw/Chap2/1:2:3/frame}{00}{36}
+\caption{velocity ratio is $1:2:3$}
+\end{figure}
+
+\end{CJK}
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
